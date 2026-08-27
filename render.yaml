@@ -1,0 +1,57 @@
+databases:
+  - name: codist-db
+    plan: free
+    databaseName: codist_db
+    user: codist_user
+
+services:
+  - type: redis
+    name: codist-redis
+    plan: free
+    ipAllowList: []
+
+  - type: web
+    name: codist-backend
+    env: python
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn codist.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: codist-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: codist-redis
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DJANGO_SETTINGS_MODULE
+        value: codist.settings.production
+      - key: ALLOWED_HOSTS
+        value: "codist-backend.onrender.com"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://codist.com" # Update this to your frontend URL
+
+  - type: worker
+    name: codist-celery
+    env: python
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "celery -A codist worker --loglevel=info"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: codist-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: codist-redis
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DJANGO_SETTINGS_MODULE
+        value: codist.settings.production

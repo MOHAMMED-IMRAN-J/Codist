@@ -1,0 +1,16 @@
+LANGUAGES = [
+    {"id": 71, "name": "Python 3", "slug": "python"},
+    {"id": 63, "name": "JavaScript", "slug": "javascript"},
+    {"id": 74, "name": "TypeScript", "slug": "typescript"},
+    {"id": 62, "name": "Java", "slug": "java"},
+    {"id": 50, "name": "C", "slug": "c"},
+    {"id": 54, "name": "C++", "slug": "cpp"},
+    {"id": 60, "name": "Go", "slug": "go"},
+    {"id": 73, "name": "Rust", "slug": "rust"},
+    {"id": 78, "name": "Kotlin", "slug": "kotlin"},
+    {"id": 83, "name": "Swift", "slug": "swift"},
+    {"id": 72, "name": "Ruby", "slug": "ruby"},
+    {"id": 68, "name": "PHP", "slug": "php"},
+    {"id": 46, "name": "Bash", "slug": "bash"},
+    {"id": 82, "name": "SQL", "slug": "sql"},
+]
